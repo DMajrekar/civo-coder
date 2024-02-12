@@ -55,6 +55,16 @@ resource "helm_release" "coder" {
     value = "coder-tls"
   }
 
+  set {
+    name = "coder.env[1].name"
+    value = "CODER_ACCESS_URL"
+  }
+
+  set {
+    name = "coder.env[1].value"
+    value = "https://coder.${var.domain}"
+  }
+
   depends_on = [ 
     kubernetes_namespace.coder, 
     kubernetes_secret.coder_db,
