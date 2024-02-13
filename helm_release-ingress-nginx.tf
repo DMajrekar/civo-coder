@@ -1,26 +1,26 @@
 resource "civo_reserved_ip" "ingress-nginx" {
-    name = "coder-ingress-nginx"
+  name = "coder-ingress-nginx"
 }
 
 resource "civo_firewall" "ingress-nginx" {
   name                 = "coder-ingress-nginx"
-  network_id = civo_network.network.id
+  network_id           = civo_network.network.id
   create_default_rules = false
 
   ingress_rule {
-    protocol    = "tcp"
-    port_range  = "80"
-    cidr        = ["0.0.0.0/0"]
-    label       = "web"
-    action      = "allow"
+    protocol   = "tcp"
+    port_range = "80"
+    cidr       = ["0.0.0.0/0"]
+    label      = "web"
+    action     = "allow"
   }
 
   ingress_rule {
-    protocol    = "tcp"
-    port_range   = "443"
-    cidr        = ["0.0.0.0/0"]
-    label       = "websecure"
-    action      = "allow"
+    protocol   = "tcp"
+    port_range = "443"
+    cidr       = ["0.0.0.0/0"]
+    label      = "websecure"
+    action     = "allow"
   }
 }
 resource "helm_release" "ingress-nginx" {
@@ -42,6 +42,6 @@ resource "helm_release" "ingress-nginx" {
     value = civo_firewall.ingress-nginx.id
   }
 
-  depends_on = [ ]
+  depends_on = []
 }
 

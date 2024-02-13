@@ -6,7 +6,7 @@ resource "helm_release" "cert-manager" {
 
   create_namespace = true
   namespace        = "cert-manager"
-  version = "v1.14.1"
+  version          = "v1.14.1"
 
   set {
     type  = "string"
@@ -18,23 +18,23 @@ resource "helm_release" "cert-manager" {
 
 resource "kubernetes_manifest" "letsencrypt-prod" {
   manifest = {
-    apiVersion: "cert-manager.io/v1",
-    kind: "ClusterIssuer",
-    metadata: {
-      name: "letsencrypt-prod"
+    apiVersion : "cert-manager.io/v1",
+    kind : "ClusterIssuer",
+    metadata : {
+      name : "letsencrypt-prod"
     },
-    spec: {
-      acme: {
-        server: "https://acme-v02.api.letsencrypt.org/directory",
-        email: var.email,
-        privateKeySecretRef: {
-          name: "letsencrypt-prod"
+    spec : {
+      acme : {
+        server : "https://acme-v02.api.letsencrypt.org/directory",
+        email : var.email,
+        privateKeySecretRef : {
+          name : "letsencrypt-prod"
         },
-        solvers: [
+        solvers : [
           {
-            http01: {
-              ingress: {
-                ingressClassName: "nginx"
+            http01 : {
+              ingress : {
+                ingressClassName : "nginx"
               }
             }
           }
@@ -43,5 +43,5 @@ resource "kubernetes_manifest" "letsencrypt-prod" {
     }
   }
 
-  depends_on = [ helm_release.cert-manager ]
+  depends_on = [helm_release.cert-manager]
 }

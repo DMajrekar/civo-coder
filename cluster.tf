@@ -24,7 +24,7 @@ resource "civo_kubernetes_cluster" "cluster" {
   }
 
   timeouts {
-    create     = "5m"
+    create = "5m"
   }
 }
 

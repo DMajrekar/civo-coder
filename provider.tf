@@ -11,7 +11,7 @@ terraform {
     }
 
     random = {
-      source = "hashicorp/random"
+      source  = "hashicorp/random"
       version = "3.5.1"
     }
 
@@ -47,7 +47,7 @@ provider "postgresql" {
   password        = civo_database.coder_database.password
   sslmode         = "require"
   connect_timeout = 15
-  superuser = false
+  superuser       = false
 }
 
 provider "kubernetes" {

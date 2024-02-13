@@ -38,17 +38,17 @@ resource "random_password" "password" {
 }
 
 resource "postgresql_role" "coder" {
-  name     = "coder"
-  login    = true
-  password = random_password.password.result
+  name             = "coder"
+  login            = true
+  password         = random_password.password.result
   connection_limit = -1
 }
 
 resource "postgresql_grant" "coder" {
-    database = postgresql_database.coder-database.name
-    role     = "coder"
-    object_type = "database"
-    schema = "public"
-    privileges = [ "CONNECT", "CREATE", "TEMPORARY" ]
-    with_grant_option = false
+  database          = postgresql_database.coder-database.name
+  role              = "coder"
+  object_type       = "database"
+  schema            = "public"
+  privileges        = ["CONNECT", "CREATE", "TEMPORARY"]
+  with_grant_option = false
 }

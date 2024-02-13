@@ -15,7 +15,7 @@ resource "kubernetes_secret" "coder_db" {
     url = "postgres://${postgresql_role.coder.name}:${random_password.password.result}@${civo_database.coder_database.endpoint}:${civo_database.coder_database.port}/${postgresql_database.coder-database.name}?sslmode=require"
   }
 
-  depends_on = [ kubernetes_namespace.coder ]
+  depends_on = [kubernetes_namespace.coder]
 }
 
 resource "helm_release" "coder" {
@@ -24,49 +24,49 @@ resource "helm_release" "coder" {
   repository = "https://helm.coder.com/v2"
   chart      = "coder"
 
-  namespace        = "coder"
+  namespace = "coder"
 
   values = [
     file("${path.module}/coder-values.yaml")
   ]
 
   set {
-    name = "coder.ingress.host"
+    name  = "coder.ingress.host"
     value = "coder.${var.domain}"
   }
 
   set {
-    name = "coder.ingress.annotations.external-dns\\.alpha\\.kubernetes\\.io/hostname"
+    name  = "coder.ingress.annotations.external-dns\\.alpha\\.kubernetes\\.io/hostname"
     value = "coder.${var.domain}"
   }
 
   set {
-    name = "coder.ingress.annotations.cert-manager\\.io/cluster-issuer"
+    name  = "coder.ingress.annotations.cert-manager\\.io/cluster-issuer"
     value = "letsencrypt-prod"
   }
 
   set {
-    name = "coder.ingress.tls.enable"
+    name  = "coder.ingress.tls.enable"
     value = "true"
   }
 
   set {
-    name = "coder.ingress.tls.secretName"
+    name  = "coder.ingress.tls.secretName"
     value = "coder-tls"
   }
 
   set {
-    name = "coder.env[1].name"
+    name  = "coder.env[1].name"
     value = "CODER_ACCESS_URL"
   }
 
   set {
-    name = "coder.env[1].value"
+    name  = "coder.env[1].value"
     value = "https://coder.${var.domain}"
   }
 
-  depends_on = [ 
-    kubernetes_namespace.coder, 
+  depends_on = [
+    kubernetes_namespace.coder,
     kubernetes_secret.coder_db,
     helm_release.cert-manager,
   ]
