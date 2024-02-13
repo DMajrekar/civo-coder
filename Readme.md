@@ -11,6 +11,8 @@ This uses terraform to install:
 - Nginx Ingress
 - External DNS
 
+![HLD](hld.excalidraw.png)
+
 ## Pre-requisites
 
 - Create an account on civo.com
