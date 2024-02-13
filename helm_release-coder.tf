@@ -71,3 +71,8 @@ resource "helm_release" "coder" {
     helm_release.cert-manager,
   ]
 }
+
+# output of the domain to access coder on
+output "domain" {
+  value = "https://coder.${var.domain}"
+}
