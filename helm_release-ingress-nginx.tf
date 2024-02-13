@@ -18,7 +18,7 @@ resource "civo_firewall" "ingress-nginx" {
   ingress_rule {
     protocol   = "tcp"
     port_range = "443"
-    cidr       = ["0.0.0.0/0"]
+    cidr       = var.lb_access
     label      = "websecure"
     action     = "allow"
   }

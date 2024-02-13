@@ -21,7 +21,7 @@ variable "kubernetes_api_access" {
 }
 
 variable "lb_access" {
-  description = "List of Subnets allowed to access via the Load Balancer"
+  description = "List of Subnets allowed to access via the Load Balancer (websecure)"
   type        = list(any)
   default     = ["0.0.0.0/0"]
 }
